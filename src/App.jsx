@@ -16,6 +16,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path='dashboard' element={<Dashboard />} />
           <Route path='addmedication' element={<AddMedication />} />
+          <Route path='addmedication/:id' element={<AddMedication />} />
           <Route path='listmedication' element={<ListMedication />} />
           <Route path='login' element={<Login />} />
           <Route path="*" element={<NoPage />} />
