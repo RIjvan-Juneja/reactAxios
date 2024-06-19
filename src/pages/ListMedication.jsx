@@ -31,6 +31,30 @@ const ListMedication = () => {
 
   }
 
+  async function deleteMedication(id) {
+    console.log(id);
+    try { 
+      const response = await fetch(`http://localhost:8080/panel/medication/api/delete/${id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: "include",
+      });
+      const result = await response.json();
+      if (response.status === 200) {
+        setData(data.filter(medication => medication.id !== id));
+        alert(result.message);
+      } else {
+        setError("Failed to delete the medication. Please try again later.");
+        alert(result.message);
+      }
+    } catch (error) {
+      console.error("Error deleting medication:", error);
+      setError("Failed to delete the medication. Please try again later.");
+    }
+  }
+
   useEffect(() => {
     fetchData();
   }, [])
@@ -96,7 +120,7 @@ const ListMedication = () => {
                   </td>
                   <td className="px-6 py-4">
                     <button  className="font-medium text-red-600 mr-3 dark:text-emerald-700 text-emerald-700 hover:underline"><ClipboardPen /></button>
-                    <button className="font-medium ml-2 text-red-600 dark:text-red-500 hover:underline"> <Trash2 /></button>
+                    <button onClick={() => deleteMedication(el.id)} className="font-medium ml-2 text-red-600 dark:text-red-500 hover:underline"> <Trash2 /></button>
                   </td>
                 </tr>
               ))
