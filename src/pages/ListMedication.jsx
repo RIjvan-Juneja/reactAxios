@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
+import { Trash2, ClipboardPen } from 'lucide-react';
 
 const ListMedication = () => {
 
@@ -67,9 +68,9 @@ const ListMedication = () => {
           </thead>
           <tbody>
 
-            {data && data.length <= 0 ? (
+            {(data && data.length <= 0)? (
               <tr className='bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'>
-                <td colSpan={9} className='px-6 py-4 text-center'>No data Found</td>
+                <td colSpan={7} className='px-6 py-4 text-center'>No data Found</td>
               </tr>
             ) : (
 
@@ -85,20 +86,17 @@ const ListMedication = () => {
                     {el.recurrence}
                   </td>
                   <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
-                  {el.start_date}
+                    {el.start_date}
                   </td>
                   <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
-                  {el.end_date}
+                    {el.end_date}
                   </td>
                   <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
-                  {el.time}
-
+                    {el.time}
                   </td>
                   <td className="px-6 py-4">
-                    <a href="#" className="font-medium text-red-600 dark:text-red-500 hover:underline">Remove</a>
-                  
-                    <a href="#" className="font-medium text-red-600 dark:text-red-500 hover:underline">Edit</a>
-
+                    <button  className="font-medium text-red-600 mr-3 dark:text-emerald-700 text-emerald-700 hover:underline"><ClipboardPen /></button>
+                    <button className="font-medium ml-2 text-red-600 dark:text-red-500 hover:underline"> <Trash2 /></button>
                   </td>
                 </tr>
               ))
