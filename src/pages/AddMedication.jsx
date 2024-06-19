@@ -80,19 +80,19 @@ const AddMedication = () => {
   return (
     <form className="max-w-sm mx-auto">
       <div className="mb-5">
-        <label htmlFor="name" className="block mb-2  font-medium text-gray-900 dark:text-white">Name</label>
+        <label htmlFor="name" className="block mb-2  font-medium text-gray-900">Name</label>
         <input type="text" id="name" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" onChange={handleInputChange} />
         {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
       </div>
 
       <div className="mb-5">
-        <label htmlFor="date" className="block mb-2  font-medium text-gray-900 dark:text-white">Date</label>
+        <label htmlFor="date" className="block mb-2  font-medium text-gray-900">Date</label>
         <input type="date" id="date" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" onChange={handleInputChange} />
         {errors.date && <p className="text-red-500 text-xs mt-1">{errors.date}</p>}
       </div>
 
       <div className="mb-5">
-        <label htmlFor="repeat-time" className="block mb-2  font-medium text-gray-900 dark:text-white">Time</label>
+        <label htmlFor="repeat-time" className="block mb-2  font-medium text-gray-900">Time</label>
         <input type="time" id="time" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" onChange={handleInputChange} />
         {errors.time && <p className="text-red-500 text-xs mt-1">{errors.time}</p>}
       </div>
