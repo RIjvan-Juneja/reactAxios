@@ -1,10 +1,11 @@
+import './App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./pages/Layout";
-import Home from "./pages/Home";
+import Dashboard from "./pages/Dashboard";
 import NoPage from "./pages/NoPage";
-import AddUser from "./pages/AddUser";
-import UserList from "./pages/UserList";
-import './App.css';
+import Login from "./pages/Login";
+import Home from './pages/Home';
+import AddMedication from './pages/AddMedication';
 
 function App() {
   return (
@@ -12,9 +13,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="adduser" element={<AddUser />} />
-          <Route path="userlist" element={<UserList />} />
+          <Route path='dashboard' element={<Dashboard />} />
+          <Route path='addmedication' element={<AddMedication />} />
           <Route path="*" element={<NoPage />} />
+          <Route path='login' element={<Login />} />
         </Route>
       </Routes>
     </BrowserRouter>
