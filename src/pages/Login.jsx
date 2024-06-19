@@ -1,6 +1,35 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const Login = () => {
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = async () => {
+    const data = {
+      username: username,
+      password: password
+    }
+    console.log(data);
+    const response = await fetch('http://localhost:8080/auth/api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials: "include",
+      body: JSON.stringify(data)
+    });
+    const result = await response.json();
+    if (response.status === 200) {
+      console.log(result);
+      // window.location.href = '/dashboard';
+    } else {
+      console.log(result);
+      alert(result.message);
+    }
+  }
+
+
   return (
     <>
       <section className="bg-white">
@@ -15,7 +44,7 @@ const Login = () => {
                   <div>
                     <label htmlFor="" className="text-base font-medium text-gray-900"> Email address </label>
                     <div className="mt-2.5">
-                      <input type="email" name="" id="" placeholder="Enter email to get started" className="block w-full p-4 text-black placeholder-gray-500 transition-all duration-200 border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:border-blue-600 focus:bg-white caret-blue-600" />
+                      <input type="email" name="" id="" placeholder="Enter email to get started" className="block w-full p-4 text-black placeholder-gray-500 transition-all duration-200 border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:border-blue-600 focus:bg-white caret-blue-600" onInput={(e) => setUsername(e.target.value)} />
                     </div>
                   </div>
 
@@ -25,12 +54,12 @@ const Login = () => {
                       <a href="#" title="" className="text-sm font-medium text-blue-600 hover:underline hover:text-blue-700 focus:text-blue-700"> Forgot password? </a>
                     </div>
                     <div className="mt-2.5">
-                      <input type="password" name="" id="" placeholder="Enter your password" className="block w-full p-4 text-black placeholder-gray-500 transition-all duration-200 border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:border-blue-600 focus:bg-white caret-blue-600" />
+                      <input type="password" name="" id="" placeholder="Enter your password" className="block w-full p-4 text-black placeholder-gray-500 transition-all duration-200 border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:border-blue-600 focus:bg-white caret-blue-600" onInput={(e) => setPassword(e.target.value)} />
                     </div>
                   </div>
 
                   <div>
-                    <button type="submit" className="inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-white transition-all duration-200 bg-blue-600 border border-transparent rounded-md focus:outline-none hover:bg-blue-700 focus:bg-blue-700">Log in</button>
+                    <button type="button" onClick={handleSubmit}  className="inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-white transition-all duration-200 bg-blue-600 border border-transparent rounded-md focus:outline-none hover:bg-blue-700 focus:bg-blue-700">Log in</button>
                   </div>
                 </div>
               </form>

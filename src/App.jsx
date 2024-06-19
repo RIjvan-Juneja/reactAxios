@@ -6,6 +6,7 @@ import NoPage from "./pages/NoPage";
 import Login from "./pages/Login";
 import Home from './pages/Home';
 import AddMedication from './pages/AddMedication';
+import ListMedication from './pages/ListMedication';
 
 function App() {
   return (
@@ -15,8 +16,9 @@ function App() {
           <Route index element={<Home />} />
           <Route path='dashboard' element={<Dashboard />} />
           <Route path='addmedication' element={<AddMedication />} />
-          <Route path="*" element={<NoPage />} />
+          <Route path='listmedication' element={<ListMedication />} />
           <Route path='login' element={<Login />} />
+          <Route path="*" element={<NoPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

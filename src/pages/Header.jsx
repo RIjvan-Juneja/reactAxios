@@ -23,6 +23,7 @@ const Header = () => {
             <div className="hidden ml-10 lg:flex lg:items-center lg:mr-auto lg:space-x-10">
              <NavLink to="/dashboard" className={({ isActive}) => `text-base font-medium text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600 ${isActive && 'text-blue-600'}`}>Dashboard</NavLink>
              <NavLink to="/addmedication" className={({ isActive}) => `text-base font-medium text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600 ${isActive && 'text-blue-600'}`}>Add Medication</NavLink>
+             <NavLink to="/listmedication" className={({ isActive}) => `text-base font-medium text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600 ${isActive && 'text-blue-600'}`}>Medication List </NavLink>
 
             </div>
 
