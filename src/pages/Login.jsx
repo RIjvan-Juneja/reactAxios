@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async () => {
     const data = {
@@ -11,7 +13,7 @@ const Login = () => {
       password: password
     }
     console.log(data);
-    const response = await fetch('http://localhost:8080/auth/api/login', {
+    const response = await fetch(`${import.meta.env.VITE_APP_API}/auth/api/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -22,10 +24,10 @@ const Login = () => {
     const result = await response.json();
     if (response.status === 200) {
       console.log(result);
-      window.location.href = '/listmedication';
+      navigate("/listmedication")
     } else {
       console.log(result);
-      alert(result.message);
+      alert(result.status);
     }
   }
 

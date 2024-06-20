@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 
 const InputField = ({ id, label, type, value, error, onChange }) => (
@@ -80,7 +80,7 @@ const AddMedication = () => {
 
       try {
 
-        const response = await fetch(`http://localhost:8080/panel/medication/api/${id ? 'update/' + id : 'add'}`, {
+        const response = await fetch(`${import.meta.env.VITE_APP_API}/panel/medication/api/${id ? 'update/' + id : 'add'}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -90,8 +90,9 @@ const AddMedication = () => {
         });
 
         const result = await response.json();
-        if (response.ok) {
+        if (response.status == 200) {
           console.log(result);
+          alert("updated successfully")
         } else {
           console.error(result);
           alert(result.message);
@@ -113,7 +114,7 @@ const AddMedication = () => {
   const fetchDataForUpdate = useCallback(async () => {
     if (id) {
       try {
-        const response = await fetch(`http://localhost:8080/panel//medication/api/fetch/${id}`, {
+        const response = await fetch(`${import.meta.env.VITE_APP_API}/panel//medication/api/fetch/${id}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

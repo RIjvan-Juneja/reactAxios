@@ -10,7 +10,7 @@ const ListMedication = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch('http://localhost:8080/panel/medication/api/list', {
+      const response = await fetch(`${import.meta.env.VITE_APP_API}/panel/medication/api/list`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -36,7 +36,7 @@ const ListMedication = () => {
   const deleteMedication = async (id) => {
     console.log(id);
     try { 
-      const response = await fetch(`http://localhost:8080/panel/medication/api/delete/${id}`, {
+      const response = await fetch(`${import.meta.env.VITE_APP_API}/panel/medication/api/delete/${id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -46,10 +46,10 @@ const ListMedication = () => {
       const result = await response.json();
       if (response.status === 200) {
         setData(data.filter(medication => medication.id !== id));
-        alert(result.message);
+        alert(result.status);
       } else {
         setError("Failed to delete the medication. Please try again later.");
-        alert(result.message);
+        alert(result.status);
       }
     } catch (error) {
       console.error("Error deleting medication:", error);
