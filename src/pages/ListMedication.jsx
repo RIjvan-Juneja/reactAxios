@@ -13,15 +13,15 @@ const ListMedication = () => {
   const fetchData = async () => {
     try {
 
-      const { response, result } = await post(`/panel/medication/api/list`, null, null, { credentials: "include" });
-
+      const response = await post(`/panel/medication/api/list`, null, null, null);
+        console.log(response);
       if (response.status === 200) {
-        console.log(result);
-        setData(result);
+        // console.log(result);
+        setData(response.data);
       } else {
         setData("error")
         setError("Server is busy. Please try again later.");
-        alert(result.message);
+        alert("Server is busy. Please try again later.");
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -33,14 +33,14 @@ const ListMedication = () => {
   const deleteMedication = async (id) => {
     try {
 
-      const { response, result } = await post(`/panel/medication/api/delete/${id}`, null, null, { credentials: "include" });
+      const response= await post(`/panel/medication/api/delete/${id}`, null, null, null);
 
       if (response.status === 200) {
         setData(data.filter(medication => medication.id !== id));
-        alert(result.status);
+        alert(response.data.status);
       } else {
         setError("Failed to delete the medication. Please try again later.");
-        alert(result.status);
+        alert(response.status);
       }
 
     } catch (error) {

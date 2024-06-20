@@ -94,14 +94,12 @@ const AddMedication = () => {
 
       try {
 
-        const { response, result } = await post(`/panel/medication/api/${id ? 'update/' + id : 'add'}`, dataToSend, null, { credentials: "include" });
+        const response = await post(`/panel/medication/api/${id ? 'update/' + id : 'add'}`, dataToSend, null, null);
 
         if (response.status == 200) {
-          console.log(result);
-          alert(result.status)
+          alert(response.data.status)
         } else {
-          console.error(result);
-          alert(result.message);
+          alert("Error");
         }
       } catch (error) {
         console.error('Error submitting form:', error);
@@ -120,18 +118,18 @@ const AddMedication = () => {
   const fetchDataForUpdate = useCallback(async () => {
     if (id) {
       try {
-        const { response, result } = await post(`/panel/medication/api/fetch/${id}`, null, null, { credentials: "include" });
-
+        const response = await post(`/panel/medication/api/fetch/${id}`, null, null, null);
+        console.log(response);
         if (response.status == 200) {
           setFormData({
-            name: result.name,
-            date: result.start_date,
-            time: convertTimeToHHMM(result.time),
-            routing: result.recurrence
+            name: response.data.name,
+            date: response.data.start_date,
+            time: convertTimeToHHMM(response.data.time),
+            routing: response.data.recurrence
           });
         } else {
-          console.error(result);
-          alert(result.status);
+          console.error(response.data);
+          alert("Error");
           navigate("/listmedication")
         }
       } catch (error) {

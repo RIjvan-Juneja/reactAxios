@@ -1,4 +1,4 @@
-
+import axios from 'axios';
 import { useState } from 'react';
 
 const useApi = () => {
@@ -6,24 +6,34 @@ const useApi = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const request = async (url, method = 'GET', body = null, headers = {},other= {}) => {
+  const request = async (url, method = 'GET', body = {}, headers = {},other= {}) => {
     setLoading(true);
     setError(null);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_APP_API}${url}`, {
-        method,
+      let response; 
+      let sendData = body? body: {};
+      const config = {
         headers: {
-          'Content-Type': 'application/json',
-          ...headers,
+          'Content-Type': 'application/json'
         },
-        body: body ? JSON.stringify(body) : null,
-        ...other
-      });
+        maxBodyLength: Infinity,
+        withCredentials: true 
+      }
 
-      const result = await response.json();
-      setData(result);
-      return {response,result};
+      if (method === 'GET') {
+        response = await axios.get(`${import.meta.env.VITE_APP_API}${url}`, sendData, config);
+      } else if (method === 'POST') {
+        response = await axios.post(`${import.meta.env.VITE_APP_API}${url}`, sendData, config);
+      } else if (method === 'PUT') {
+        response = await axios.put(`${import.meta.env.VITE_APP_API}${url}`, sendData, config);
+      } else if (method === 'DELETE') {
+        response = await axios.delete(`${import.meta.env.VITE_APP_API}${url}`, { ...config, data: sendData });
+      }
+
+      setData(response.data);
+      return response;
+
     } catch (err) {
       setError(err);
       throw err;

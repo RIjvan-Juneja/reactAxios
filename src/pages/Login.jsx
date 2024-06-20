@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import useFetch from "../customeHooks/useFetch";
+import axios from 'axios';
 
 const Login = () => {
 
@@ -15,14 +16,13 @@ const Login = () => {
       username: username,
       password: password
     }
-
-    const {response,result} = await post(`/auth/api/login`,dataToSend,null,{credentials: "include"});
+    
+    const response = await post(`/auth/api/login`,dataToSend,null,null);
+    console.log(response);
     
     if (response.status === 200) {
-      console.log(result);
       navigate("/listmedication")
     } else {
-      console.log(result);
       alert(result.status);
     }
   }
