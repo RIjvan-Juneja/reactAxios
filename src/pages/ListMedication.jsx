@@ -6,7 +6,7 @@ const ListMedication = () => {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
 
-  async function fetchData() {
+  const fetchData = async () => {
     try {
       const response = await fetch('http://localhost:8080/panel/medication/api/list', {
         method: 'POST',
@@ -31,7 +31,7 @@ const ListMedication = () => {
 
   }
 
-  async function deleteMedication(id) {
+  const deleteMedication = async (id) => {
     console.log(id);
     try { 
       const response = await fetch(`http://localhost:8080/panel/medication/api/delete/${id}`, {

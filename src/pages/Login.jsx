@@ -22,13 +22,12 @@ const Login = () => {
     const result = await response.json();
     if (response.status === 200) {
       console.log(result);
-      // window.location.href = '/dashboard';
+      window.location.href = '/listmedication';
     } else {
       console.log(result);
       alert(result.message);
     }
   }
-
 
   return (
     <>

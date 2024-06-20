@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const InputField = ({ id, label, type, value, error, onChange }) => (
   <div className="mb-5">
     <label htmlFor={id} className="block mb-2 font-medium text-gray-900">{label}</label>
-    <input 
-      type={type} 
-      id={id} 
-      value={value} 
-      className={`shadow-sm bg-gray-50 border ${error ? 'border-red-500' : 'border-gray-300'} text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5`} 
-      onChange={onChange} 
+    <input
+      type={type}
+      id={id}
+      value={value}
+      className={`shadow-sm bg-gray-50 border ${error ? 'border-red-500' : 'border-gray-300'} text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5`}
+      onChange={onChange}
     />
     {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
   </div>
@@ -17,8 +17,8 @@ const InputField = ({ id, label, type, value, error, onChange }) => (
 
 // AddMedication Component
 const AddMedication = () => {
+
   const { id } = useParams();
-  const history = useHistory();
 
   const [formData, setFormData] = useState({
     name: '',
@@ -32,11 +32,11 @@ const AddMedication = () => {
     time: '',
   });
 
-  const handleInputChange = useCallback((event) => {
+  const handleInputChange = (event) => {
     const { id, value } = event.target;
     setFormData((prevData) => ({ ...prevData, [id]: value }));
     setErrors((prevErrors) => ({ ...prevErrors, [id]: '' }));
-  }, []);
+  }
 
   const validateFormData = () => {
     const { name, date, time } = formData;
@@ -101,6 +101,41 @@ const AddMedication = () => {
       }
     }
   };
+
+  //  ================ for Update Fetch the previous data =============== //
+  const fetchDataForUpdate = useCallback(async () => {
+    console.log("fetchDataForUpdate");
+    if (id) {
+      try {
+        const response = await fetch(`http://localhost:8080/panel//medication/api/fetch/${id}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: "include",
+        });
+
+        const result = await response.json();
+        if (response.status == 200) {
+          setFormData({
+            name: result.name,
+            date: result.start_date,
+            time: result.time,
+          });
+        } else {
+          console.error(result);
+          alert(result.status);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        alert('An error occurred while fetching the data. Please try again.');
+      }
+    }
+  }, [id]);
+
+  useEffect(() => {
+    fetchDataForUpdate();
+  }, [fetchDataForUpdate]);
 
   return (
     <form className="max-w-sm mx-auto">
