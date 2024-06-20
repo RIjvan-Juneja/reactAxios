@@ -1,27 +1,23 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import useFetch from "../customeHooks/useFetch";
 
 const Login = () => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const { loading, error , post } = useFetch();
 
   const handleSubmit = async () => {
-    const data = {
+    
+    const dataToSend = {
       username: username,
       password: password
     }
-    console.log(data);
-    const response = await fetch(`${import.meta.env.VITE_APP_API}/auth/api/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      credentials: "include",
-      body: JSON.stringify(data)
-    });
-    const result = await response.json();
+
+    const {response,result} = await post(`${import.meta.env.VITE_APP_API}/auth/api/login`,dataToSend,null,{credentials: "include"});
+    
     if (response.status === 200) {
       console.log(result);
       navigate("/listmedication")
