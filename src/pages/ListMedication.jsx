@@ -13,7 +13,7 @@ const ListMedication = () => {
   const fetchData = async () => {
     try {
 
-      const { response, result } = await post(`${import.meta.env.VITE_APP_API}/panel/medication/api/list`, null, null, { credentials: "include" });
+      const { response, result } = await post(`/panel/medication/api/list`, null, null, { credentials: "include" });
 
       if (response.status === 200) {
         console.log(result);
@@ -33,7 +33,7 @@ const ListMedication = () => {
   const deleteMedication = async (id) => {
     try {
 
-      const { response, result } = await post(`${import.meta.env.VITE_APP_API}/panel/medication/api/delete/${id}`, null, null, { credentials: "include" });
+      const { response, result } = await post(`/panel/medication/api/delete/${id}`, null, null, { credentials: "include" });
 
       if (response.status === 200) {
         setData(data.filter(medication => medication.id !== id));

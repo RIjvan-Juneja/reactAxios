@@ -94,18 +94,8 @@ const AddMedication = () => {
 
       try {
 
-        const { response, result } = await post(`${import.meta.env.VITE_APP_API}/panel/medication/api/${id ? 'update/' + id : 'add'}`, dataToSend, null, { credentials: "include" });
+        const { response, result } = await post(`/panel/medication/api/${id ? 'update/' + id : 'add'}`, dataToSend, null, { credentials: "include" });
 
-        // const response = await fetch(`${import.meta.env.VITE_APP_API}/panel/medication/api/${id ? 'update/' + id : 'add'}`, {
-        //   method: 'POST',
-        //   headers: {
-        //     'Content-Type': 'application/json',
-        //   },
-        //   credentials: "include",
-        //   body: JSON.stringify(data),
-        // });
-
-        // const result = await response.json();
         if (response.status == 200) {
           console.log(result);
           alert(result.status)
@@ -130,7 +120,7 @@ const AddMedication = () => {
   const fetchDataForUpdate = useCallback(async () => {
     if (id) {
       try {
-        const { response, result } = await post(`${import.meta.env.VITE_APP_API}/panel/medication/api/fetch/${id}`, null, null, { credentials: "include" });
+        const { response, result } = await post(`/panel/medication/api/fetch/${id}`, null, null, { credentials: "include" });
 
         if (response.status == 200) {
           setFormData({

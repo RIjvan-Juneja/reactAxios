@@ -16,7 +16,7 @@ const Login = () => {
       password: password
     }
 
-    const {response,result} = await post(`${import.meta.env.VITE_APP_API}/auth/api/login`,dataToSend,null,{credentials: "include"});
+    const {response,result} = await post(`/auth/api/login`,dataToSend,null,{credentials: "include"});
     
     if (response.status === 200) {
       console.log(result);

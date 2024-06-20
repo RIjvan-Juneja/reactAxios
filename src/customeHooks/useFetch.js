@@ -11,7 +11,7 @@ const useApi = () => {
     setError(null);
 
     try {
-      const response = await fetch(url, {
+      const response = await fetch(`${import.meta.env.VITE_APP_API}${url}`, {
         method,
         headers: {
           'Content-Type': 'application/json',
