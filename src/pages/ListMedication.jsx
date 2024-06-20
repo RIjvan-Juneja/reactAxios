@@ -1,10 +1,12 @@
 import  { useEffect, useState } from 'react'
 import { Trash2, ClipboardPen } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 
 const ListMedication = () => {
 
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
+  const navigate = useNavigate(); 
 
   const fetchData = async () => {
     try {
@@ -119,8 +121,8 @@ const ListMedication = () => {
                     {el.time}
                   </td>
                   <td className="px-6 py-4">
-                    <button  className="font-medium text-red-600 mr-3 dark:text-emerald-700 text-emerald-700 hover:underline"><ClipboardPen /></button>
-                    <button onClick={() => deleteMedication(el.id)} className="font-medium ml-2 text-red-600 dark:text-red-500 hover:underline"> <Trash2 /></button>
+                    <button type='button' onClick={()=> { navigate(`/addmedication/${el.id}`) }} className="font-medium ml-2 text-red-600 dark:text-red-500 hover:underline">  <ClipboardPen /></button>
+                    <button type='button' onClick={() => deleteMedication(el.id)} className="font-medium ml-2 text-red-600 dark:text-red-500 hover:underline"> <Trash2 /></button>
                   </td>
                 </tr>
               ))
@@ -129,7 +131,6 @@ const ListMedication = () => {
           </tbody>
         </table>
       </div>
-
 
     </>
   )
