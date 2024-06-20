@@ -1,5 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import useFetch from "../customeHooks/useFetch";
+
 
 const InputField = ({ id, label, type, value, error, onChange }) => (
   <div className="mb-2">
@@ -11,8 +13,8 @@ const InputField = ({ id, label, type, value, error, onChange }) => (
       className={`shadow-sm bg-gray-50 border ${error ? 'border-red-500' : 'border-gray-300'} text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5`}
       onChange={onChange}
     />
-    
-    <p className={`text-red-500 text-sm mt-1 ${ error?  ' ':'invisible'}`}>{(error)? error: "." }</p>
+
+    <p className={`text-red-500 text-sm mt-1 ${error ? ' ' : 'invisible'}`}>{(error) ? error : "."}</p>
   </div>
 );
 
@@ -21,6 +23,8 @@ const AddMedication = () => {
 
   const { id } = useParams();
   const navigate = useNavigate();
+  const { loading, post } = useFetch();
+
 
   const [formData, setFormData] = useState({
     name: '',
@@ -77,28 +81,31 @@ const AddMedication = () => {
 
   const handleSubmit = async () => {
     if (validateFormData()) {
-      const data = {
+      
+      const dataToSend = {
         name: formData.name,
         start_date: formData.date,
         time: formData.time,
         notes: "Take with Water",
         form_type: formData.routing,
         routing: formData.routing,
-        day : (formData.routing == "weekly")? "monday" : null
+        day: (formData.routing == "weekly") ? "monday" : null
       };
 
       try {
 
-        const response = await fetch(`${import.meta.env.VITE_APP_API}/panel/medication/api/${id ? 'update/' + id : 'add'}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          credentials: "include",
-          body: JSON.stringify(data),
-        });
+        const { response, result } = await post(`${import.meta.env.VITE_APP_API}/panel/medication/api/${id ? 'update/' + id : 'add'}`, dataToSend, null, { credentials: "include" });
 
-        const result = await response.json();
+        // const response = await fetch(`${import.meta.env.VITE_APP_API}/panel/medication/api/${id ? 'update/' + id : 'add'}`, {
+        //   method: 'POST',
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //   },
+        //   credentials: "include",
+        //   body: JSON.stringify(data),
+        // });
+
+        // const result = await response.json();
         if (response.status == 200) {
           console.log(result);
           alert(result.status)
@@ -120,18 +127,11 @@ const AddMedication = () => {
   }
 
   //  ================ for Update Fetch the previous data =============== //
-  const fetchDataForUpdate = useCallback( async () => {
+  const fetchDataForUpdate = useCallback(async () => {
     if (id) {
       try {
-        const response = await fetch(`${import.meta.env.VITE_APP_API}/panel/medication/api/fetch/${id}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          credentials: "include",
-        });
+        const { response, result } = await post(`${import.meta.env.VITE_APP_API}/panel/medication/api/fetch/${id}`, null, null, { credentials: "include" });
 
-        const result = await response.json();
         if (response.status == 200) {
           setFormData({
             name: result.name,
@@ -168,7 +168,7 @@ const AddMedication = () => {
           <option value="oto">One Time Only</option>
           <option value="weekly">Weekly</option>
         </select>
-        <p className={`text-red-500 text-sm mt-1 ${ errors.routing?  ' ':'invisible'}`}> {(errors.routing)? errors.routing : ". " }</p>
+        <p className={`text-red-500 text-sm mt-1 ${errors.routing ? ' ' : 'invisible'}`}> {(errors.routing) ? errors.routing : ". "}</p>
       </div>
 
       <div className="mb-5 mt-5">

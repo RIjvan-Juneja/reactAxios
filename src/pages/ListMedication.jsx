@@ -1,23 +1,20 @@
-import  { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Trash2, ClipboardPen } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import useFetch from "../customeHooks/useFetch";
 
 const ListMedication = () => {
 
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
+  const { loading, post } = useFetch();
 
   const fetchData = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_APP_API}/panel/medication/api/list`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        credentials: "include",
-      });
-      const result = await response.json();
+
+      const { response, result } = await post(`${import.meta.env.VITE_APP_API}/panel/medication/api/list`, null, null, { credentials: "include" });
+
       if (response.status === 200) {
         console.log(result);
         setData(result);
@@ -34,16 +31,10 @@ const ListMedication = () => {
   }
 
   const deleteMedication = async (id) => {
-    console.log(id);
-    try { 
-      const response = await fetch(`${import.meta.env.VITE_APP_API}/panel/medication/api/delete/${id}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        credentials: "include",
-      });
-      const result = await response.json();
+    try {
+
+      const { response, result } = await post(`${import.meta.env.VITE_APP_API}/panel/medication/api/delete/${id}`, null, null, { credentials: "include" });
+
       if (response.status === 200) {
         setData(data.filter(medication => medication.id !== id));
         alert(result.status);
@@ -51,6 +42,7 @@ const ListMedication = () => {
         setError("Failed to delete the medication. Please try again later.");
         alert(result.status);
       }
+
     } catch (error) {
       console.error("Error deleting medication:", error);
       setError("Failed to delete the medication. Please try again later.");
@@ -94,7 +86,7 @@ const ListMedication = () => {
           </thead>
           <tbody>
 
-            {(data && data.length <= 0)? (
+            {(data && data.length <= 0) ? (
               <tr className='bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'>
                 <td colSpan={7} className='px-6 py-4 text-center'>No data Found</td>
               </tr>
@@ -121,7 +113,7 @@ const ListMedication = () => {
                     {el.time}
                   </td>
                   <td className="px-6 py-4">
-                    <button type='button' onClick={()=> { navigate(`/addmedication/${el.id}`) }} className="font-medium ml-2 text-red-600 dark:text-red-500 hover:underline">  <ClipboardPen /></button>
+                    <button type='button' onClick={() => { navigate(`/addmedication/${el.id}`) }} className="font-medium ml-2 text-red-600 dark:text-red-500 hover:underline">  <ClipboardPen /></button>
                     <button type='button' onClick={() => deleteMedication(el.id)} className="font-medium ml-2 text-red-600 dark:text-red-500 hover:underline"> <Trash2 /></button>
                   </td>
                 </tr>
