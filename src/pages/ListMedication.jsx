@@ -1,6 +1,6 @@
 import  { useEffect, useState } from 'react'
 import { Trash2, ClipboardPen } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const ListMedication = () => {
 
