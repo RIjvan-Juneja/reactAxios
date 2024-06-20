@@ -103,7 +103,8 @@ const AddMedication = () => {
     }
   };
 
-  function convertToHHMM(timeString) {
+  //  ============  for time convert HH:MM:SS to HH:MM  ================= // 
+  const convertTimeToHHMM = (timeString) => {
     const [hours, minutes, seconds] = timeString.split(':');
     return `${hours}:${minutes}`;
   }
@@ -126,7 +127,7 @@ const AddMedication = () => {
           setFormData({
             name: result.name,
             date: result.start_date,
-            time: convertToHHMM(result.time),
+            time: convertTimeToHHMM(result.time),
           });
         } else {
           console.error(result);
